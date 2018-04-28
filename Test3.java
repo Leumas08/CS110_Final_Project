@@ -1,16 +1,33 @@
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 public class Test3 extends Test2{
 	public static void main(String[] arg) {
+		JFrame inputname= new JFrame();
+		JFrame outputFrame= new JFrame();
 		Test2 test2=new Test2();
 		ImageUtils image=new ImageUtils();
 		Editor edit=new Editor();
-		String filename="Colors.png";
+		
+		String filename= (String)JOptionPane.showInputDialog(
+	            inputname,
+	            "Please enter the filename of the picture you/n wish to manipulate (include .png(jpg) etc..",
+	            "Input File Name",
+	            JOptionPane.PLAIN_MESSAGE);
+		//Asks for output name
+		String outputname= (String)JOptionPane.showInputDialog(
+	            outputFrame,
+	            "Please Enter your desired output File name (do not include a .png(jpg ect)",
+	            "Output File Name",
+	            JOptionPane.PLAIN_MESSAGE)+".png";
+		
 		original=image.loadImage(filename);
 		test2.main(filename);
 		manipulate=image.cloneArray(original);
@@ -36,7 +53,23 @@ public class Test3 extends Test2{
 			BufferedImage output=ImageUtils.convertToBufferedFrom2D(manipulate);
 			label.setIcon(new ImageIcon(output));
 			frame.setSize(frame.getPreferredSize());
+			}if(repaint==true) {
+				frame.setVisible(false);
+				original=Recolor.ReplaceColor(manipulate);
+				frame.setVisible(true);
+				repaint=false;
 			}
+			}try {
+				// retrieve image
+				File outputfile = new File(outputname);
+				BufferedImage output=ImageUtils.convertToBufferedFrom2D(manipulate);
+				ImageIO.write(output, "png", outputfile);
+				JFrame saved=frames.Saved();
+				saved.setVisible(true);
+			} catch (Exception b) {
+				System.out.println("Could not save the image, please ensure the filepath"
+	    				+ " was properly specified.");
+	    		System.exit(1);
 			}
 		}
 	}

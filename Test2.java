@@ -9,6 +9,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -39,13 +40,15 @@ public class Test2 extends JFrame implements ActionListener, MouseListener, Mous
 	static boolean Rotate270=false;
 	static boolean Paint=false;
 	static boolean save=false;
+	static boolean undo=false;
 	static boolean crop=false;
+	static boolean repaint=false;
 	static JLabel label=new JLabel();
 	static JFrame frame= new JFrame();
 	static Test2 test2=new Test2();
 	static ImageUtils image=new ImageUtils();
 	static Editor edit=new Editor();
-	static Recolor mose=new Recolor();
+	static Recolor replaceColor=new Recolor();
 	static Frames frames=new Frames();
 	static Icons icons=new Icons();
 	static Color blackpen=new Color(0, 0, 0);
@@ -127,21 +130,30 @@ public class Test2 extends JFrame implements ActionListener, MouseListener, Mous
 				Green.addActionListener(this);
 					Green.setIcon(Icons.Green16());
 						PaintMenu.add(Green);  				
-		JMenu SaveMenu = new JMenu("Save");
+		JMenu FileMenu = new JMenu("File");
+				JMenuItem Undo= new JMenuItem("Undo");
+					Undo.addActionListener(this);
+						FileMenu.add(Undo);
 				JMenuItem save= new JMenuItem("Save Image");
 					save.addActionListener(this);
-  						SaveMenu.add(save);
+  						FileMenu.add(save);
   						
   		JMenu CropMenu= new JMenu("Crop");
-  				JMenuItem cropping = new JCheckBoxMenuItem("Crop On");
+  				JMenuItem cropping = new JMenuItem("Crop On");
   					cropping.addActionListener(this);
   						 CropMenu.add(cropping);				
   						
-  						
-  		jMenuBar.add(ImageOptions);
+  		JMenu Repaint = new JMenu("Recolor");
+  				JMenuItem recolor= new JMenuItem("Replace Color");
+  					recolor.addActionListener(this);
+  		  				Repaint.add(recolor);	
+  		
+  	  	jMenuBar.add(FileMenu); 
+  	  	jMenuBar.add(ImageOptions);
 		jMenuBar.add(CropMenu);
 		jMenuBar.add(PaintMenu);
-		jMenuBar.add(SaveMenu);  
+		jMenuBar.add(Repaint);
+		 
 		  frame.setJMenuBar(jMenuBar);
 		}
 	
@@ -185,7 +197,11 @@ public class Test2 extends JFrame implements ActionListener, MouseListener, Mous
 	      	}if(item.equals("Green Pen")) {
 	      		penColor =greenpen;
 	      	}if(item.equals("Crop On")) {
-	      		crop=!crop;
+	      		crop=true;
+	      	}if(item.equals("Replace Color")) {
+	      		repaint=true;
+	      	}if(item.equals("Undo")) {
+	      		undo=true;
 	      	}
 	  }
 	public void main(String filename) {
@@ -203,8 +219,7 @@ public class Test2 extends JFrame implements ActionListener, MouseListener, Mous
 	    frame.setSize(frame.getPreferredSize());
 	    frame.setVisible(true);
 		}
-	public void mouseDragged(MouseEvent e) {
-			
+	public void mouseDragged(MouseEvent e) {		
 		if(Paint==true) {
 			xpaint = e.getX()-8;
 			ypaint = e.getY()-52;
@@ -242,6 +257,7 @@ public class Test2 extends JFrame implements ActionListener, MouseListener, Mous
 		label.setIcon(new ImageIcon(cropImage));
 		frame.setSize(frame.getPreferredSize());
 		original=cropped;
+		crop=false;
 		}
 	}
 	public void mouseMoved(MouseEvent e) {
@@ -264,5 +280,4 @@ public class Test2 extends JFrame implements ActionListener, MouseListener, Mous
 	public void mouseEntered(MouseEvent arg0) {}
 	@Override
 	public void mouseExited(MouseEvent arg0) {}
-	
 }
