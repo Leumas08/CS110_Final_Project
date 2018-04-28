@@ -10,10 +10,10 @@ public class Icons extends Test2{
 		Color[][] green=new Color[100][100];
 			for (int i=0; i<100; i++) {
 				for(int j=0; j<100; j++) {
-					green[i][j]=new Color(0, 255, 0);
+					green[i][j]=greenpen;
 				}
 			}
-			BufferedImage buffered= image.convertToBufferedFrom2D(green);
+			BufferedImage buffered= ImageUtils.convertToBufferedFrom2D(green);
 			ImageIcon icon=new ImageIcon(
 			        buffered.getScaledInstance(16, 16, Image.SCALE_SMOOTH));
 			return icon;
@@ -22,10 +22,10 @@ public class Icons extends Test2{
 		Color[][] red=new Color[100][100];
 			for (int i=0; i<100; i++) {
 				for(int j=0; j<100; j++) {
-					red[i][j]=new Color(255, 0, 0);
+					red[i][j]=redpen;
 				}
 			}
-			BufferedImage buffered= image.convertToBufferedFrom2D(red);
+			BufferedImage buffered= ImageUtils.convertToBufferedFrom2D(red);
 			ImageIcon icon=new ImageIcon(
 			        buffered.getScaledInstance(16, 16, Image.SCALE_SMOOTH));
 			return icon;
@@ -34,10 +34,22 @@ public class Icons extends Test2{
 		Color[][] blue=new Color[100][100];
 			for (int i=0; i<100; i++) {
 				for(int j=0; j<100; j++) {
-					blue[i][j]=new Color(255, 0, 0);
+					blue[i][j]=bluepen;
 				}
 			}
-			BufferedImage buffered= image.convertToBufferedFrom2D(blue);
+			BufferedImage buffered= ImageUtils.convertToBufferedFrom2D(blue);
+			ImageIcon icon=new ImageIcon(
+			        buffered.getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+			return icon;
+	}
+	public static ImageIcon Purple16() {
+		Color[][] purple=new Color[100][100];
+			for (int i=0; i<100; i++) {
+				for(int j=0; j<100; j++) {
+					purple[i][j]=purplepen;
+				}
+			}
+			BufferedImage buffered= ImageUtils.convertToBufferedFrom2D(purple);
 			ImageIcon icon=new ImageIcon(
 			        buffered.getScaledInstance(16, 16, Image.SCALE_SMOOTH));
 			return icon;
@@ -46,10 +58,58 @@ public class Icons extends Test2{
 		Color[][] yellow=new Color[100][100];
 			for (int i=0; i<100; i++) {
 				for(int j=0; j<100; j++) {
-					yellow[i][j]=new Color(255, 255, 0);
+					yellow[i][j]=yellowpen;
 				}
 			}
-			BufferedImage buffered= image.convertToBufferedFrom2D(yellow);
+			BufferedImage buffered= ImageUtils.convertToBufferedFrom2D(yellow);
+			ImageIcon icon=new ImageIcon(
+			        buffered.getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+			return icon;
+	}
+	public static ImageIcon Orange16() {
+		Color[][] orange=new Color[100][100];
+			for (int i=0; i<100; i++) {
+				for(int j=0; j<100; j++) {
+					orange[i][j]=orangepen;
+				}
+			}
+			BufferedImage buffered= ImageUtils.convertToBufferedFrom2D(orange);
+			ImageIcon icon=new ImageIcon(
+			        buffered.getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+			return icon;
+	}
+	public static ImageIcon Black16() {
+		Color[][] black=new Color[100][100];
+			for (int i=0; i<100; i++) {
+				for(int j=0; j<100; j++) {
+					black[i][j]=blackpen;
+				}
+			}
+			BufferedImage buffered= ImageUtils.convertToBufferedFrom2D(black);
+			ImageIcon icon=new ImageIcon(
+			        buffered.getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+			return icon;
+	}
+	public static ImageIcon White16() {
+		Color[][] white=new Color[100][100];
+			for (int i=0; i<100; i++) {
+				for(int j=0; j<100; j++) {
+					white[i][j]=whitepen;
+				}
+			}
+			BufferedImage buffered= ImageUtils.convertToBufferedFrom2D(white);
+			ImageIcon icon=new ImageIcon(
+			        buffered.getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+			return icon;
+	}
+	public static ImageIcon Pink16() {
+		Color[][] pink=new Color[100][100];
+			for (int i=0; i<100; i++) {
+				for(int j=0; j<100; j++) {
+					pink[i][j]=pinkpen;
+				}
+			}
+			BufferedImage buffered= ImageUtils.convertToBufferedFrom2D(pink);
 			ImageIcon icon=new ImageIcon(
 			        buffered.getScaledInstance(16, 16, Image.SCALE_SMOOTH));
 			return icon;

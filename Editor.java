@@ -49,9 +49,9 @@ public class Editor {
 		    Color[][] result = new Color[width][height];
 		    for (int row = 0; row < width; row++) {
 		      for (int col = 0; col < height; col++) {
-		    	int red = img[col][row].getRed();
-			    int green = img[col][row].getGreen();
-			    int blue =img[col][row].getBlue();
+		    	int red = img[row][col].getRed();
+			    int green = img[row][col].getGreen();
+			    int blue =img[row][col].getBlue();
 		        double outRed = (red * .393) + (green *.769) + (blue * .189);
 		        double outGreen = (red *.349) + (green *.686) + (blue * .168);
 		        double outBlue = (red *.272) + (green *.534) + (blue * .131);
@@ -101,8 +101,8 @@ public class Editor {
 		  int width = img.length;
 		    int height = img[0].length;
 		    Color[][] result = new Color[width][height];
-		    for (int row = 0; row < width; row++) {
-		      for (int col = 0; col < height; col++) {
+		    for (int row = 0; row < height; row++) {
+		      for (int col = 0; col < width; col++) {
 		        int red = img[col][row].getRed();
 			    int green = img[col][row].getGreen();
 			    int blue =img[col][row].getBlue();
@@ -119,7 +119,7 @@ public class Editor {
 		        }if(outputGreen>255) {
 		        	outputGreen=255;
 		        }
-		        result[row][col] = new Color(outputRed, outputGreen, outputBlue);
+		        result[col][row] = new Color(outputRed, outputGreen, outputBlue);
 		       }
 		   }
 		    return result;
@@ -151,5 +151,16 @@ public class Editor {
 	  public Color[][] Rotate270Right(Color[][] img){
 		  Color[][] rotated= Rotate180(Rotate90Right(img));
 		  return rotated;
+	  }
+	  public Color[][][] Cube(){
+		  Color[][][] cube=new Color[255][255][255];
+		  for (int i=0; i<255; i++) {
+			  for(int j=0; j<255; j++) {
+				  for(int k=0; k<255; k++) {
+					  cube[i][j][k]=new Color(i, j, k);
+				  }
+			  }
+		  }
+		  return cube;
 	  }
 }

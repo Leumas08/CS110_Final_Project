@@ -14,14 +14,15 @@ public class Test3 extends Test2{
 		original=image.loadImage(filename);
 		test2.main(filename);
 		manipulate=image.cloneArray(original);
+		
 	while(save==false) {
-		if(Paint==false) {
+		if((Paint==false)) {
 		 manipulate=image.cloneArray(original);
 			if(gray==true) {
 				manipulate=edit.Grayscale(manipulate);
 			}if(cyan==true) {
 				manipulate=edit.Cyanotype(manipulate);
-			}if(green==true) {
+			}if(GreenFilter==true) {
 				manipulate=edit.Green(manipulate);
 			}if(sephia==true) {
 				manipulate=edit.Sephia(manipulate);
@@ -31,11 +32,11 @@ public class Test3 extends Test2{
 				manipulate=edit.Rotate180(manipulate);
 			}if(Rotate270==true) {
 				manipulate=edit.Rotate270Right(manipulate);
-			}}
+			}}if(crop==false) {
 			BufferedImage output=ImageUtils.convertToBufferedFrom2D(manipulate);
 			label.setIcon(new ImageIcon(output));
 			frame.setSize(frame.getPreferredSize());
-			label.repaint();
+			}
 			}
 		}
 	}
