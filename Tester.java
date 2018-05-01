@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
@@ -21,8 +23,13 @@ public class Tester extends Substructure{
 	            "Please Enter your desired output File name (do not include a .png(jpg ect)",
 	            "Output File Name",
 	            JOptionPane.PLAIN_MESSAGE)+".png";
-		
+		frame.setTitle(outputname);
 		base=image.loadImage(filename);
+		Color[][] logo=image.loadImage("LOGO.PNG");
+		BufferedImage logoI=ImageUtils.convertToBufferedFrom2D(logo);
+		ImageIcon IconLogo=new ImageIcon(
+		        logoI.getScaledInstance(2, 2, Image.SCALE_SMOOTH));
+		frame.setIconImage(logoI);
 		Substructure.main(filename);
 		manipulate=image.cloneArray(base);
 		

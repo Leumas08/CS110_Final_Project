@@ -24,13 +24,11 @@ public class Substructure extends JFrame implements ActionListener, MouseListene
 	int xbottom=0;
 	int ybottom=0;
 	int paintsize=0;
-	Point test=new Point(0, 0);
 	static Color[][] original;
 	static Color[][] base;
 	static Color[][] manipulate;
-	static Color[][] temp1;
-	
 	//Filter Boolean Variables
+	static boolean rect=false;
 	static boolean outofbounds=false;
 	static boolean gray=false;
 	static boolean cyan=false;
@@ -155,7 +153,14 @@ public class Substructure extends JFrame implements ActionListener, MouseListene
 					Size1.addActionListener(this);
 						Size1.setIcon(Icons.Black1());
 							PaintMenu.add(Size1);
-				
+		/*					
+		JMenu ShapeMenu= new JMenu("Shapes");
+			JMenuItem rectangle = new JMenuItem("Rectangle");
+					rectangle.addActionListener(this);
+						ShapeMenu.add(rectangle);
+			*/				
+							
+							
 		JMenu FileMenu = new JMenu("File");
 				JMenuItem ReturnOriginal= new JMenuItem("Load Original");
 					ReturnOriginal.addActionListener(this);
@@ -181,13 +186,13 @@ public class Substructure extends JFrame implements ActionListener, MouseListene
   					recolor.addActionListener(this);
   		  				Repaint.add(recolor);	
   		
-  		  				
-  		  				
-  		  				
   	  	jMenuBar.add(FileMenu); 
   	  	jMenuBar.add(ImageOptions);
 		jMenuBar.add(CropMenu);
 		jMenuBar.add(PaintMenu);
+		/*
+		jMenuBar.add(ShapeMenu);
+		*/
 		jMenuBar.add(Repaint);
 		 
 		  frame.setJMenuBar(jMenuBar);
@@ -250,8 +255,9 @@ public class Substructure extends JFrame implements ActionListener, MouseListene
 	      		paintsize =3;
 	      	}if(item.equals("1")) {
 	      		paintsize =0;
+	      	}if(item.equals("Rectangle")) {
+	      		rect=true;
 	      	}
-	      	
 	  }
 	public void main(String filename) {
 		base = image.loadImage(filename);
@@ -266,40 +272,80 @@ public class Substructure extends JFrame implements ActionListener, MouseListene
 	    frame.addMouseMotionListener(this);
 	    frame.setSize(frame.getPreferredSize());
 	    frame.setVisible(true);
-	    temp1=ImageUtils.cloneArray(base);
 		}
 	public void mouseDragged(MouseEvent e) {		
-		if(Paint==true) {
 			xpaint = e.getX()-8;
 			ypaint = e.getY()-32;
-			System.out.println(xpaint+"  "+ypaint);
 			int length=base.length;
 			int height=base[0].length;
 			outofbounds=false;
+		if(Paint==true) {			
 			if((xpaint>length)||(xpaint<0)) {
 				outofbounds=true;
 			}if((ypaint>height)||(ypaint<0)) {
 				outofbounds=true;
 			}
 			if(outofbounds==false) {
-			if(erase==false) {
-				for(int a=-paintsize; a<=paintsize; a++) {
-					for(int b=-paintsize; b<=paintsize; b++) {
+				if(erase==false) {
+					for(int a=-paintsize; a<=paintsize; a++) {
+						for(int b=-paintsize; b<=paintsize; b++) {
 						manipulate[xpaint+a][ypaint+b]=penColor;
+						}
 					}
-				}
 			}if(erase==true) {
 				for(int a=-paintsize; a<=paintsize; a++) {
 					for(int b=-paintsize; b<=paintsize; b++) {
 						manipulate[xpaint+a][ypaint+b]=base[xpaint+a][ypaint+b];
+						}
 					}
 				}
 			}
 		}
-	}
-}
-	public void mousePressed(MouseEvent e) {
 		if(crop==true) {
+			if((xpaint>length)||(xpaint<0)) {
+				outofbounds=true;
+			}if((ypaint>height)||(ypaint<0)) {
+				outofbounds=true;
+			}
+			if(outofbounds==false) {
+				manipulate=ImageUtils.cloneArray(base);
+				for(int a=xtop; a<=xpaint; a++) {
+					manipulate[a][ytop]=Color.black;
+					manipulate[a][ypaint]=Color.black;
+					
+				}for(int b=ytop; b<=ypaint; b++) {
+					manipulate[xtop][b]=Color.black;
+					manipulate[xpaint][b]=Color.black;
+				
+				}BufferedImage output=ImageUtils.convertToBufferedFrom2D(manipulate);
+				label.setIcon(new ImageIcon(output));
+			}
+		}
+		/*
+		if(rect==true) {
+			
+			if((xpaint>length)||(xpaint<0)) {
+				outofbounds=true;
+			}if((ypaint>height)||(ypaint<0)) {
+				outofbounds=true;
+			}
+			if(outofbounds==false) {
+				manipulate=ImageUtils.cloneArray(base);
+				for(int c=xtop; c<=xpaint; c++) {
+					manipulate[c][ytop]=penColor;
+					manipulate[c][ypaint]=penColor;
+				
+				}for(int d=ytop; d<=ypaint; d++) {
+					manipulate[xtop][d]=penColor;
+					manipulate[xpaint][d]=penColor;
+				
+				}BufferedImage pasteshape=ImageUtils.convertToBufferedFrom2D(manipulate);
+				label.setIcon(new ImageIcon(pasteshape));
+			}
+		}*/
+	}
+	public void mousePressed(MouseEvent e) {
+		if((crop==true)||(rect=true)) {
 			xtop=e.getX()-8;
 			ytop=e.getY()-32;
 		}
@@ -312,6 +358,7 @@ public class Substructure extends JFrame implements ActionListener, MouseListene
 			ybottom=e.getY()-32;
 			Color[][] cropped=new Color[xbottom-xtop+1][ybottom-ytop+1];
 			int row=0;
+			manipulate=ImageUtils.cloneArray(base);
 			for(int i=xtop; i<=xbottom; i++) {
 					int column=0;
 				for(int j=ytop; j<=ybottom; j++) {
